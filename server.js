@@ -80,7 +80,7 @@ app.use('/api/dinings', dinings);
 app.use('/api/reviews', reviews);
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello World Guys!');
 });
 
 app.use("*", (req, res) => res.status(404).json({error: "not found"}));

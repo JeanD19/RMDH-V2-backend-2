@@ -28,7 +28,7 @@ app.use(session({
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.RATEDINING_DB_URI }),
     cookie: {
-        secure: false, //set to true when deploying to production
+        secure: true, //set to true when deploying to production
         maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
     },
     unset: 'destroy'
@@ -80,7 +80,7 @@ app.use('/api/dinings', dinings);
 app.use('/api/reviews', reviews);
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello World Guys!');
 });
 
 app.use("*", (req, res) => res.status(404).json({error: "not found"}));

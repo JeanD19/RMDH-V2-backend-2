@@ -79,6 +79,10 @@ app.use('/api/dinings', dinings);
 //Endpoint for handling reviews
 app.use('/api/reviews', reviews);
 
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
 app.use("*", (req, res) => res.status(404).json({error: "not found"}));
 
 export default app;

@@ -28,7 +28,7 @@ app.use(session({
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.RATEDINING_DB_URI }),
     cookie: {
-        secure: false, //set to true when deploying to production
+        secure: true, //set to true when deploying to production
         maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
     },
     unset: 'destroy'

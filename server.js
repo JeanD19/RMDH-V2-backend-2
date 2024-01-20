@@ -44,6 +44,8 @@ app.use(function (err, req, res, next) {
 //Testing sessions
 app.post(`/api/login`, (req, res) => {
   console.log(req.body);
+  res.json({ message: '200 Ok' });
+
 });
 
 

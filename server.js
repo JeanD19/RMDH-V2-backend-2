@@ -41,6 +41,11 @@ app.use(function (err, req, res, next) {
     res.status(500).send('Something broke!')
 })
 
+//Testing sessions
+app.post(`/api/login`, (req, res) => {
+  console.log(req.body);
+});
+
 
 // Endpoint to get the session data (add to swagger)
 app.get('/api/session', (req, res) => {

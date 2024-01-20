@@ -42,11 +42,12 @@ app.use(function (err, req, res, next) {
 })
 
 //Testing sessions
-app.post(`/api/login`, (req, res) => {
+app.get(`/`, (req, res) => {
   console.log(req.body);
   req.session.user = req.body.user_id;
-  res.json({ message: '200 Ok' });
-
+  console.log(req.session)
+  //res.json({ message: '200 Ok' });
+  res.send("Hello guys")
 });
 
 

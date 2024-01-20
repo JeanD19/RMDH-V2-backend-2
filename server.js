@@ -44,6 +44,7 @@ app.use(function (err, req, res, next) {
 //Testing sessions
 app.post(`/api/login`, (req, res) => {
   console.log(req.body);
+  req.session.user = user_id;
   res.json({ message: '200 Ok' });
 
 });

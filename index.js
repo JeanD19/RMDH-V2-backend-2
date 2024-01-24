@@ -11,6 +11,8 @@ dotenv.config();
 const MongoClient = mongodb.MongoClient;
 
 const port = process.env.PORT || 3001;
+console.log(process.env.RATEDINING_DB_URI);
+console.log(port);
 
 MongoClient.connect(process.env.RATEDINING_DB_URI, {
   maxPoolSize: 500,
@@ -28,6 +30,7 @@ MongoClient.connect(process.env.RATEDINING_DB_URI, {
     await ReviewsDAO.injectDB(client) //inject the DB connection to the DAO
     
     app.listen(port, () => {
+      console.log(`Connected to all the DBs`);
       console.log(`listening on port ${port}`);
     });
   });

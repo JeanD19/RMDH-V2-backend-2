@@ -46,8 +46,9 @@ export default class UsersController {
                 year: year,
                 email: email
             }
+            req.session.isAuth = true;
             console.log(req.session.user);
-            res.json({message: '200 Ok', user: req.session.user});
+            res.json({message: '200 Ok', user: req.session.user, session: req.session.id});
         } catch (error) {
             next(error);
         }
@@ -76,7 +77,9 @@ export default class UsersController {
                 year: user.year,
                 email: user.email
             }
-            res.json({message: '200 Ok', user: req.session.user});
+            //req.session.isAuth = true;
+            req.session.isAuth = true;
+            res.json({message: '200 Ok', user: req.session.user, session: req.session.id});
         } catch(error) {
             next(error);
         }

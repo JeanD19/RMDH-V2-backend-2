@@ -7,33 +7,72 @@ import dinings from './api/dinings.route.js';
 import reviews from './api/reviews.route.js';
 import users from './api/users.route.js';
 import session from 'express-session';
-import MongoStore from 'connect-mongo';
+import mongoose from 'mongoose';
+import connectMongoDBSession from 'connect-mongodb-session';
+// import MongoStore from 'connect-mongo';
 import dotenv from "dotenv";
 
 const swaggerDocument = YAML.load('./openapi.yaml');
 
 const app = express();
 
+dotenv.config();
+
 app.use(express.json());
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin:  'http://localhost:3000',  // rechange to this process.env.FRONTEND_URL, 
   credentials: true
 }));
 
-dotenv.config();
+
+const MongoDBSession = connectMongoDBSession(session);
+
+const store = new MongoDBSession({
+  uri: process.env.RATEDINING_DB_URI,
+  collection: 'sessions'
+});
+
+mongoose.connect(process.env.RATEDINING_DB_URI, {
+  useNewUrlParser: true,
+  //useUnifiedTopology: true,
+}).then(res => {
+  console.log('MongoDB connected');
+}).catch(err => {
+  console.log('Failed to connect to MongoDB', err);
+});
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: store,
+  cookie: {
+    secure: false, //set to true when deploying to production,
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+  },
+}));
+
+//Testing sessions
+// app.get(`/`, (req, res) => {
+//   //console.log(req.body);
+//   req.session.isAuth = true;
+//   console.log(req.session.id)
+//   //res.json({ message: '200 Ok' });
+//   res.json({ message: '200 Ok', session: req.session.id });
+// });
 
 //Configure session middleware
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.RATEDINING_DB_URI }),
-    cookie: {
-        secure: true, //set to true when deploying to production
-        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
-    },
-    unset: 'destroy'
-}));
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//     store: MongoStore.create({ mongoUrl: process.env.RATEDINING_DB_URI }),
+//     cookie: {
+//         secure: true, //set to true when deploying to production
+//         maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+//     },
+//     unset: 'destroy'
+// }));
 
 // Error handler function
 app.use(function (err, req, res, next) {
@@ -44,9 +83,11 @@ app.use(function (err, req, res, next) {
 
 // Endpoint to get the session data (add to swagger)
 app.get('/api/session', (req, res) => {
-  if(req.session.user) {
+  if(req.session.id) {
+    req.session.isLoggedIn = true;
     res.json({ isLoggedIn: true, user: req.session.user});
   } else{
+    req.session.isLoggedIn = false;
     res.json({ isLoggedIn: false });
   }
 });

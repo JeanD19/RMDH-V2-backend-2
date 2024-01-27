@@ -80,6 +80,15 @@ app.use(function (err, req, res, next) {
     res.status(500).send('Something broke!')
 })
 
+//Testing sessions
+app.get(`/`, (req, res) => {
+  console.log(req.body);
+  req.session.isAuth = true;
+  console.log(req.session)
+  //res.json({ message: '200 Ok' });
+  res.send("Hello guys")
+});
+
 
 // Endpoint to get the session data (add to swagger)
 app.get('/api/session', (req, res) => {

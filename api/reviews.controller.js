@@ -34,7 +34,7 @@ export default class ReviewsController {
             const {username, year, text_review, grades, dining_id} = req.body;
             let user = '';
             //if username is null, user not identified
-            console.log(`The username for this review: ${username.username}`);
+            //console.log(`The username for this review: ${username.username}`);
             if(username == null){
                 user = generateUsername('_', 3, 15);
                 let usernameExists = await UsersDAO.checkUsername(username);

@@ -25,42 +25,6 @@ app.use(cors({
 }));
 
 
-// const MongoDBSession = connectMongoDBSession(session);
-
-// const store = new MongoDBSession({
-//   uri: process.env.RATEDINING_DB_URI,
-//   collection: 'sessions'
-// });
-
-// mongoose.connect(process.env.RATEDINING_DB_URI, {
-//   useNewUrlParser: true,
-//   //useUnifiedTopology: true,
-// }).then(res => {
-//   console.log('MongoDB connected');
-// }).catch(err => {
-//   console.log('Failed to connect to MongoDB', err);
-// });
-
-// app.use(session({
-//   secret: process.env.SESSION_SECRET,
-//   resave: false,
-//   saveUninitialized: false,
-//   store: store,
-//   cookie: {
-//     secure: false, //set to true when deploying to production,
-//     maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
-//   },
-// }));
-
-//Testing sessions
-// app.get(`/`, (req, res) => {
-//   //console.log(req.body);
-//   req.session.isAuth = true;
-//   console.log(req.session.id)
-//   //res.json({ message: '200 Ok' });
-//   res.json({ message: '200 Ok', session: req.session.id });
-// });
-
 //Configure session middleware
 app.use(session({
     secret: process.env.SESSION_SECRET,

@@ -46,7 +46,7 @@ export default class UsersController {
                 year: year,
                 email: email
             }
-            console.log(req.session.user);
+            //console.log(req.session.user);
             res.json({message: '200 Ok', user: req.session.user});
         } catch (error) {
             next(error);
@@ -56,7 +56,7 @@ export default class UsersController {
     static async apiLogInUser(req, res, next) {
         try {
             const { email, password } = req.body;
-            console.log(req.body);
+            //console.log(req.body);
 
             const user = await UsersDAO.getUserByEmail(email);
             if (!user) {

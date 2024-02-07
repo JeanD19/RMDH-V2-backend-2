@@ -10,7 +10,7 @@ export default class ReviewsController {
 
     static async apiGetReviews(req, res, next) {
         try {
-            console.log('About to search for reviews for a dining hall')
+            //console.log('About to search for reviews for a dining hall')
             let reviewsList = await ReviewsDAO.getReviews(req.query.dining_id);
             // if(diningsList.length === 0) {
             //     res.json({message: 'No dining halls for this school yet...'})
@@ -19,7 +19,7 @@ export default class ReviewsController {
             let response = {
                 reviews: reviewsList,
             };
-            console.log(response)
+            //console.log(response)
             res.json(response);
         } catch (error) {
             //next(error);
@@ -29,8 +29,8 @@ export default class ReviewsController {
 
     static async apiAddReview(req, res, next){
         try{
-            console.log('Adding a review to the reviews collection');
-            console.log(req.body);
+            //console.log('Adding a review to the reviews collection');
+            //console.log(req.body);
             const {username, year, text_review, grades, dining_id} = req.body;
             let user = '';
             //if username is null, user not identified
@@ -55,7 +55,7 @@ export default class ReviewsController {
             const date_obj = new Date()
             const today_format = date_obj.toISOString()
 
-            console.log(today_format)
+            //console.log(today_format)
 
             //Change all the strings of the grades to decimal
             const gradesInt = Object.entries(grades).reduce((acc, [key, value]) => {
@@ -63,17 +63,17 @@ export default class ReviewsController {
                 return acc;
             }, {});
 
-            console.log(gradesInt)
+            //console.log(gradesInt)
 
             const response = await ReviewsDAO.addReview(dining_id, user, year, today_format, gradesInt, text_review);
 
             if(response.acknowledged){
                 //Modify the dining hall metric total_reviews & reviews_sum
-                console.log('Added the review, now updating the dining hall metrics')
+                //console.log('Added the review, now updating the dining hall metrics')
                 const response2 = await DiningHallsDAO.updateDiningHall(dining_id, gradesInt)
 
                 if(response2.error){
-                    console.error(`Error updating dining hall: ${response2.error}`);
+                    //console.error(`Error updating dining hall: ${response2.error}`);
                     res.json({error: response2.error});
                 }
 

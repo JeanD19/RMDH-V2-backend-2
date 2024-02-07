@@ -7,8 +7,6 @@ import dinings from './api/dinings.route.js';
 import reviews from './api/reviews.route.js';
 import users from './api/users.route.js';
 import session from 'express-session';
-// import mongoose from 'mongoose';
-// import connectMongoDBSession from 'connect-mongodb-session';
 import MongoStore from 'connect-mongo';
 import dotenv from "dotenv";
 

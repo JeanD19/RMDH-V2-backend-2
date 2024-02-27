@@ -2,8 +2,8 @@ import UsersDAO from '../dao/usersDAO.js';
 //import { generateUsername } from 'unique-username-generator';
 import pkg from 'unique-username-generator';
 import bcrypt from 'bcrypt';
-const { generateUsername } = pkg;
-const {uniqueUsernameGenerator} = pkg;
+// const { generateUsername } = pkg;
+// const {uniqueUsernameGenerator} = pkg;
 import { generateUsername } from 'friendly-username-generator';
 
 export default class UsersController {

@@ -3,16 +3,66 @@ import UsersDAO from '../dao/usersDAO.js';
 import pkg from 'unique-username-generator';
 import bcrypt from 'bcrypt';
 const { generateUsername } = pkg;
+const {uniqueUsernameGenerator} = pkg;
 
 export default class UsersController {
     static async apiCreateUser(req, res, next) {
+
+        const adjectives = [
+            "Kindhearted", "Gentle", "Loving", "Caring", "Compassionate", "Tender", "Warmhearted", "Affectionate", 
+            "Generous", "Considerate", "Empathetic", "Sympathetic", "Nurturing", "Thoughtful", "Sincere", "Gracious", 
+            "Understanding", "Supportive", "Encouraging", "Friendly", "Hospitable", "Radiant", "Sweet", "Genuine", 
+            "Pleasant", "Cheerful", "Joyful", "Happy", "Delightful", "Positive", "Bright", "Sunny", "Lighthearted", 
+            "Bubbly", "Jovial", "Optimistic", "Uplifting", "Enthusiastic", "Energetic", "Vibrant", "Spirited", 
+            "Inspiring", "Motivating", "Heartwarming", "Endearing", "Adorable", "Charming", "Darling", "Amiable", 
+            "Winsome", "Pleasant", "Agreeable", "Alluring", "Attractive", "Beautiful", "Graceful", "Lovely", "Angelic", 
+            "Serene", "Peaceful", "Tranquil", "Calm", "Soothing", "Relaxing", "Serene", "Blissful", "Content", 
+            "Fulfilling", "Gratifying", "Satisfying", "Joyous", "Gleeful", "Merry", "Playful", "Fun-loving", 
+            "Whimsical", "Magical", "Enchanting", "Captivating", "Fascinating", "Alluring", "Spellbinding", 
+            "Charismatic", "Magnetic", "Irresistible", "Inviting", "Welcoming", "Homely", "Cozy", "Snug", 
+            "Comforting", "Invigorating", "Refreshing", "Restorative", "Revitalizing", "Rejuvenating", "Energizing", 
+            "Empowering", "Strengthening", "Nourishing", "Wholesome", "Healthy", "Hearty", "Robust", "Flourishing", 
+            "Vital", "Dynamic", "Lively", "Spirited", "Agile", "Sprightly", "Peppy", "Zesty", "Vigorous", "Resilient", 
+            "Hardy", "Sturdy", "Tough", "Tenacious", "Durable", "Reliable", "Trustworthy", "Steadfast", "Loyal", 
+            "Devoted", "Committed", "Dedicated", "Faithful", "True-hearted", "Genuine", "Authentic", "Real", "Honest", 
+            "Sincere", "Trustworthy", "Dependable", "Reliable", "Steadfast", "Stalwart", "Solid", "Unwavering", 
+            "Rock-solid", "Consistent", "Persistent", "Determined", "Diligent", "Hardworking", "Industrious", "Assiduous", 
+            "Conscientious", "Tireless", "Patient", "Persevering", "Enduring", "Tenacious", "Resolute", "Strong-willed", 
+            "Intrepid", "Courageous", "Brave", "Fearless", "Bold", "Daring", "Valiant", "Heroic", "Noble", "Gallant", 
+            "Magnanimous", "Benevolent", "Altruistic", "Selfless", "Philanthropic", "Charitable", "Giving", "Sacrificing", 
+            "Thoughtful", "Considerate", "Kindhearted", "Compassionate", "Empathetic", "Understanding", "Supportive", 
+            "Encouraging", "Nurturing", "Protective", "Guardian-like", "Uplifting", "Inspiring", "Motivating", 
+            "Enthusiastic", "Positive", "Optimistic", "Hopeful", "Cheerful", "Joyful", "Grateful", "Appreciative", "Thankful", 
+            "Content", "Fulfilled"
+        ]
+
+        const animal_names = [
+            'Alligator', 'Alpaca', 'Anteater', 'Antelope', 'Armadillo', 'Barracuda', 'Beaver', 'Beetle', 'Bluebird', 'Bluejay', 'Butterfly',
+            'Caterpillar', 'Cheetah', 'Chimpanzee', 'Chinchilla', 'Chipmunk', 'Cockroach', 'Coyote', 'Dalmatian', 'Dolphin', 'Dragonfly', 
+            'Eagle', 'Echidna', 'Elephant', 'Firefly', 'Flamingo', 'Gazelle', 'Gibbon', 'Giraffe', 'Goldfish', 'Gorilla', 'Grasshopper',
+            'Hamster', 'Hedgehog', 'Hippopotamus', 'Hummingbird', 'Jellyfish', 'Kangaroo', 'Koala', 'Ladybug', 'Lemur', 'Lobster', 'Marmot',
+            'Manatee', 'Meerkat', 'Mongoose', 'Octopus', 'Ocelot', 'Orangutan', 'Ostrich', 'Pangolin', 'Peacock', 'Penguin', 'Piranha', 
+            'Platypus', 'Pony', 'Porcupine', 'Porpoise', 'Praying_Mantis', 'Puffin', 'Raccoon', 'Rattlesnake', 'Red_Panda', 'Rhinoceros', 
+            'Salamander', 'Scorpion', 'Sea_Lion', 'Seahorse', 'Snow_Leopard', 'Sparrow', 'Squirrel', 'Starfish', 'Tarantula', 'Tiger', 'Tortoise',
+            'Toucan', 'Wallaby', 'Walrus', 'Whale_Shark', 'Woodchuck', 'Woodpecker'
+        ]
+        
         try {
             
             const { university, year, email, password } = req.body;
             let username = '';
-
+            
+            const config = {
+                dictionaries: [adjectives, animal_names],
+                seperator: '_',
+                style: 'capital',
+                randomDigits: 3
+            }
+            username = uniqueUsernameGenerator(config);
+            console.log(username);
             // Create unique username
-            username = generateUsername('_', 3, 15);
+            //username = generateUsername('_', 3, 15);
+
 
             //Check if the email is already taken
             let emailExists = await UsersDAO.checkEmail(email); //if true it will return the user document, else return null

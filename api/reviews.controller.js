@@ -38,20 +38,24 @@ export default class ReviewsController {
             //console.log(`The username for this review: ${username.username}`);
             if(username == null){
                 //user = generateUsername('_', 3, 15);
-                username = generateUsername();
-                let usernameExists = await UsersDAO.checkUsername(username);
+                user = generateUsername();
+                let usernameExists = await UsersDAO.checkUsername(user);
                 
                 //check if it exist already
                 while (usernameExists) {
                     // Generate a new username
                     //user = generateUsername('_', 3, 15);
-                    username = generateUsername();
-                    console.log(`The randomly generated username is ${username}`);
-                    usernameExists = await UsersDAO.checkUsername(username); //If it's false it will break 
+                    user = generateUsername();
+                    console.log(`The randomly generated username is ${user}`);
+                    usernameExists = await UsersDAO.checkUsername(user); //If it's false it will break 
                 }
+
+                console.log(`The anynomous reviewer username for this review will be: ${user}`)
+
             }
             else {
                 user = username.username;
+                console.log(`There already was a username for this review: ${user}`);
             }
 
             // Generate the date

@@ -4,6 +4,7 @@ import pkg from 'unique-username-generator';
 import bcrypt from 'bcrypt';
 const { generateUsername } = pkg;
 const {uniqueUsernameGenerator} = pkg;
+import { generateUsername } from 'friendly-username-generator';
 
 export default class UsersController {
     static async apiCreateUser(req, res, next) {
@@ -46,10 +47,11 @@ export default class UsersController {
             'Salamander', 'Scorpion', 'Sea_Lion', 'Seahorse', 'Snow_Leopard', 'Sparrow', 'Squirrel', 'Starfish', 'Tarantula', 'Tiger', 'Tortoise',
             'Toucan', 'Wallaby', 'Walrus', 'Whale_Shark', 'Woodchuck', 'Woodpecker'
         ]
-        
+
         try {
             
             const { university, year, email, password } = req.body;
+            
             let username = '';
             
             const config = {
@@ -58,7 +60,8 @@ export default class UsersController {
                 style: 'capital',
                 randomDigits: 3
             }
-            username = uniqueUsernameGenerator(config);
+            //username = uniqueUsernameGenerator(config);
+            username = generateUsername();
             console.log(username);
             // Create unique username
             //username = generateUsername('_', 3, 15);
@@ -78,7 +81,8 @@ export default class UsersController {
 
             while (usernameExists) {
                 // Generate a new username
-                username = generateUsername('_', 3, 15);
+                //username = generateUsername('_', 3, 15);
+                username = generateUsername();
                 usernameExists = await UsersDAO.checkUsername(username); //If it's false it will break 
             }
 

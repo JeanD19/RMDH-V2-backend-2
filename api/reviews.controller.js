@@ -2,6 +2,8 @@ import ReviewsDAO from "../dao/reviewsDAO.js";
 import UsersDAO from '../dao/usersDAO.js';
 import DiningHallsDAO from '../dao/diningHallsDAO.js'
 import pkg from 'unique-username-generator';
+import { generateUsername } from 'friendly-username-generator';
+
 
 const { generateUsername } = pkg;
 
@@ -36,13 +38,15 @@ export default class ReviewsController {
             //if username is null, user not identified
             //console.log(`The username for this review: ${username.username}`);
             if(username == null){
-                user = generateUsername('_', 3, 15);
+                //user = generateUsername('_', 3, 15);
+                username = generateUsername();
                 let usernameExists = await UsersDAO.checkUsername(username);
                 
                 //check if it exist already
                 while (usernameExists) {
                     // Generate a new username
-                    user = generateUsername('_', 3, 15);
+                    //user = generateUsername('_', 3, 15);
+                    username = generateUsername();
                     console.log(`The randomly generated username is ${username}`);
                     usernameExists = await UsersDAO.checkUsername(username); //If it's false it will break 
                 }

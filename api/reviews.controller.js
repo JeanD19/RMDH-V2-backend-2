@@ -1,11 +1,10 @@
 import ReviewsDAO from "../dao/reviewsDAO.js";
 import UsersDAO from '../dao/usersDAO.js';
 import DiningHallsDAO from '../dao/diningHallsDAO.js'
-import pkg from 'unique-username-generator';
+//import pkg from 'unique-username-generator';
 import { generateUsername } from 'friendly-username-generator';
 
-
-const { generateUsername } = pkg;
+//const { generateUsername } = pkg;
 
 
 export default class ReviewsController {
